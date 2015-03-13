@@ -25,6 +25,9 @@ public class View extends JFrame {
         AuthorizationDialog authorizationDialog = new AuthorizationDialog();
         SettingDialog settingDialog = new SettingDialog();
         AboutDialog aboutDialog = new AboutDialog();
+        ErrorDialog errorDialog = new ErrorDialog();
+        errorDialog.showErrorDialog("Hello world");
+        RegistrationDialog registrationDialog = new RegistrationDialog();
     }
 
 }
