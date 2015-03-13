@@ -20,9 +20,10 @@ public class EvaluatePanel extends JPanel {
         JButton choseFileButton = new JButton("Загрузить");
         JButton evaluateButton = new JButton("Расчитать");
 
-
+        JCheckBox checkBox = new JCheckBox("Учитывать этот файл при расчете модели");
 
         add(choseFileButton);
+        add(checkBox);
         add(evaluateButton);
 
         setSize(500, 500);
