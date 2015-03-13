@@ -1,7 +1,6 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
 import javax.swing.*;
-import javax.swing.text.StringContent;
 
 /**
  * Created by Константин on 13.03.2015.

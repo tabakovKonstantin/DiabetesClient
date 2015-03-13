@@ -1,8 +1,7 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * Created by Константин on 13.03.2015.
@@ -22,12 +21,18 @@ public class View extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        AuthorizationDialog authorizationDialog = new AuthorizationDialog();
+        /*AuthorizationDialog authorizationDialog = new AuthorizationDialog();
         SettingDialog settingDialog = new SettingDialog();
         AboutDialog aboutDialog = new AboutDialog();
         ErrorDialog errorDialog = new ErrorDialog();
         errorDialog.showErrorDialog("Hello world");
-        RegistrationDialog registrationDialog = new RegistrationDialog();
+        RegistrationDialog registrationDialog = new RegistrationDialog();*/
+
+        /*JFileChooser jfc = new JFileChooser();
+        jfc.showOpenDialog(null);*/
+
     }
+
+
 
 }

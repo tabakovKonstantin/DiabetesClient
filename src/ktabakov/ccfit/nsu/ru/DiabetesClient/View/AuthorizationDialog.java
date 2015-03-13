@@ -1,7 +1,5 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
-import sun.security.util.Password;
-
 import javax.swing.*;
 
 /**
