@@ -10,6 +10,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
@@ -21,6 +22,56 @@ import java.sql.*;
 public class Main {
     public static void main(String[] args) {
 //        View view = new View();
+
+        /**********************************************/
+        JSONArray dateList = new JSONArray();
+        JSONArray valueList = new JSONArray();
+
+
+        /******************************************************************/
+        Connection conn = null;
+        Statement st = null;
+        try {
+            conn = DriverManager.getConnection("jdbc:ucanaccess://c:/test2.mmg","" ,"gAbriEl");
+            System.out.print("все ок я тут");
+        } catch (SQLException e) {
+            System.out.print("я тут");
+            e.printStackTrace();
+        }
+        try {
+            st = conn.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String sql = "Select * from tblCGMDetail";
+        ResultSet rs = null;
+        try {
+            rs = st.executeQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            while(rs.next()){
+
+                valueList.add(new Integer(rs.getString(16)));
+                dateList.add(new Integer(rs.getString(1)));
+                //System.out.println("\n"+rs.getString(4)+"\t"+rs.getString(16));
+
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+        JSONObject obj = new JSONObject();
+
+        obj.put("Date", dateList);
+        obj.put("Value", valueList);
+
+        System.out.println(obj);
 /***************************************************/
 //        JSONObject json = new JSONObject();
 //        json.put("someKey", "someValue");
@@ -58,7 +109,7 @@ public class Main {
 
         try {
             HttpPost request = new HttpPost("http://localhost:3000/test");
-            StringEntity params = new StringEntity(json.toString());
+            StringEntity params = new StringEntity(obj.toString());
             request.addHeader("content-type", "application/json");
             request.setEntity(params);
             ErrorDialog errorDialog = new ErrorDialog();
@@ -76,33 +127,5 @@ public class Main {
 //            httpClient.close();
         }
 /**********************************************************************/
-        Connection conn = null;
-        Statement st = null;
-        try {
-             conn = DriverManager.getConnection("jdbc:ucanaccess://c:/test2.mmg","" ,"gAbriEl");
-            System.out.print("все ок я тут");
-        } catch (SQLException e) {
-            System.out.print("я тут");
-            e.printStackTrace();
-        }
-        /*try {
-            st = conn.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
-        String sql = "Select * from valueGlucose";
-        ResultSet rs = null;
-        try {
-            rs = st.executeQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            while(rs.next()){ System.out.println("\n"+rs.getString(2));
-
-        }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
     }}
