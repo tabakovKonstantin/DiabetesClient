@@ -1,7 +1,12 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
+import ktabakov.ccfit.nsu.ru.DiabetesClient.Controller.Controller;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.TableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
 /**
@@ -9,10 +14,15 @@ import java.io.File;
  */
 public class EvaluatePanel extends JPanel {
 
-    private File pathToFile = null;
-    public EvaluatePanel() {
-        createEvaluatePanel();
+    private Controller controller = null;
+    private DataTablePanel dataTablePanel = null;
 
+    public EvaluatePanel(Controller controller, DataTablePanel dataTablePanel) {
+
+        this.controller = controller;
+        this.dataTablePanel = dataTablePanel;
+
+        createEvaluatePanel();
     }
 
     private void createEvaluatePanel() {
@@ -22,25 +32,39 @@ public class EvaluatePanel extends JPanel {
 
         JCheckBox checkBox = new JCheckBox("Учитывать этот файл при расчете модели");
 
+        choseFileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                File pathToFile = fileChooser();
+                System.out.print(pathToFile);
+                TableModel modelForRealData = controller.getTableModelForRealData(pathToFile);
+                dataTablePanel.setModelForRealData(modelForRealData);
+
+
+            }
+        });
+
         add(choseFileButton);
-        add(checkBox);
         add(evaluateButton);
+        add(checkBox);
 
         setSize(500, 500);
         setVisible(true);
     }
 
-    private void fileChooser() {
+    private File fileChooser() {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("*.mmg Files", "mmg");
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(null);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
-           pathToFile = chooser.getSelectedFile();
+           return chooser.getSelectedFile();
         }
+        else {
+            new ErrorDialog().showErrorDialog("net takogo fiyla");
+            return null;
+        }
+
     }
 
-    public File getPathToFile() {
-        return pathToFile;
-    }
 }

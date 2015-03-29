@@ -1,8 +1,9 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
 
+import ktabakov.ccfit.nsu.ru.DiabetesClient.Controller.Controller;
+
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 
 /**
@@ -10,18 +11,12 @@ import java.awt.*;
  */
 public class View extends JFrame {
 
+    private Controller controller = null;
     private MenuBar menuBar = null;
+    private EvaluatePanel evaluatePanel = null;
+    private DataTablePanel dataTablePanel = null;
 
     public View() {
-
-        menuBar = new MenuBar();
-
-        setLocation(100, 100);
-        setSize(500, 500);
-        setTitle("DiabetesClient");
-        setJMenuBar(menuBar);
-        setVisible(true);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         /*AuthorizationDialog authorizationDialog = new AuthorizationDialog();
         SettingDialog settingDialog = new SettingDialog();
@@ -30,28 +25,23 @@ public class View extends JFrame {
         errorDialog.showErrorDialog("Hello world");
         RegistrationDialog registrationDialog = new RegistrationDialog();*/
 
+        controller = new Controller();
+        menuBar = new MenuBar();
+        dataTablePanel = new DataTablePanel();
+        evaluatePanel = new EvaluatePanel(controller, dataTablePanel);
 
-        EvaluatePanel evaluatePanel = new EvaluatePanel();
-        PredictDataTablePanel predictDataTablePanel = new PredictDataTablePanel();
+        add(dataTablePanel, BorderLayout.NORTH);
+        add(evaluatePanel, BorderLayout.SOUTH);
 
-        //add(predictDataTablePanel);
-        //add(evaluatePanel);
-        DataTablePanel da = new DataTablePanel();
-        add(da);
-
-        JScrollPane scrollPane = new JScrollPane(da, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane scrollPane = new JScrollPane(dataTablePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         getContentPane().add(scrollPane);
+
+        setLocation(100, 100);
+        setSize(500, 500);
+        setTitle("DiabetesClient");
+        setJMenuBar(menuBar);
         setVisible(true);
-
-        //pack();
-
-        /*JFileChooser jfc = new JFileChooser();
-        jfc.showOpenDialog(null);*/
-
-
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
     }
-
-
-
 }
