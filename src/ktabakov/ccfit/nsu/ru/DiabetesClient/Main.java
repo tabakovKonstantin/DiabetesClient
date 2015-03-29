@@ -1,6 +1,6 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient;
 
-import ktabakov.ccfit.nsu.ru.DiabetesClient.View.ErrorDialog;
+import ktabakov.ccfit.nsu.ru.DiabetesClient.View.*;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -15,13 +15,14 @@ import org.json.simple.JSONObject;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Iterator;
 
 /**
  * Created by ?????????? on 13.03.2015.
  */
 public class Main {
     public static void main(String[] args) {
-//        View view = new View();
+        View view = new View();
 
         /**********************************************/
         JSONArray dateList = new JSONArray();
@@ -44,7 +45,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        String sql = "Select * from tblCGMDetail";
+        String sql = "Select * from tblCGMDetail WHERE BGLevel < 45";
         ResultSet rs = null;
         try {
             rs = st.executeQuery(sql);
@@ -71,7 +72,34 @@ public class Main {
         obj.put("Date", dateList);
         obj.put("Value", valueList);
 
-        System.out.println(obj);
+        Iterator iterator = obj.values().iterator();
+//        System.out.print("\n result1 : " +iterator.next());
+//        System.out.print("\n result2 : " +iterator.next());
+
+        JSONArray val2 = (JSONArray)iterator.next();
+        JSONArray val1 = (JSONArray)iterator.next();
+
+        System.out.print("\n " +val1.iterator().next());
+        System.out.print("\n " +val1.iterator().next());
+        System.out.print("\n " +val1.iterator().next());
+        System.out.print("\n " +val1.iterator().next());
+        System.out.print("\n " +val1.toArray()[3]);
+
+
+
+        System.out.println("\n"+obj.values().toArray()[0].getClass());
+        JSONArray array = new JSONArray();
+        array =  (JSONArray)obj.values().toArray()[1];
+        System.out.println("\n" + array.iterator().next());
+        System.out.println("\n" + array.iterator().next());
+        System.out.println("\n" + array.iterator().next());
+        System.out.println("\n" + array.iterator().next());
+
+
+
+
+
+
 /***************************************************/
 //        JSONObject json = new JSONObject();
 //        json.put("someKey", "someValue");
@@ -85,6 +113,7 @@ public class Main {
         json.put("is_vip", new Boolean(true));
         json.put("nickname", null);
         json.putAll(obj1);
+//        System.out.println("\n"+obj1.values());
 /********************************************************/
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 

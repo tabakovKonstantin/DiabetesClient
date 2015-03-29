@@ -22,12 +22,12 @@ public class View extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        AuthorizationDialog authorizationDialog = new AuthorizationDialog();
+        /*AuthorizationDialog authorizationDialog = new AuthorizationDialog();
         SettingDialog settingDialog = new SettingDialog();
         AboutDialog aboutDialog = new AboutDialog();
         ErrorDialog errorDialog = new ErrorDialog();
         errorDialog.showErrorDialog("Hello world");
-        RegistrationDialog registrationDialog = new RegistrationDialog();
+        RegistrationDialog registrationDialog = new RegistrationDialog();*/
 
         /*JFileChooser jfc = new JFileChooser();
         jfc.showOpenDialog(null);*/

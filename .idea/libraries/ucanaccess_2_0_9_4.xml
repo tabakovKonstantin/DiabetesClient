@@ -1,13 +1,11 @@
 <component name="libraryTable">
   <library name="ucanaccess-2.0.9.4">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Desktop/UCanAccess-2.0.9.4-bin/UCanAccess-2.0.9.4-bin/ucanaccess-2.0.9.4.jar!/" />
-      <root url="jar://$USER_HOME$/Desktop/UCanAccess-2.0.9.4-bin/UCanAccess-2.0.9.4-bin/lib/commons-lang-2.6.jar!/" />
-      <root url="jar://$USER_HOME$/Desktop/UCanAccess-2.0.9.4-bin/UCanAccess-2.0.9.4-bin/lib/commons-logging-1.1.1.jar!/" />
-      <root url="jar://$USER_HOME$/Desktop/UCanAccess-2.0.9.4-bin/UCanAccess-2.0.9.4-bin/lib/hsqldb.jar!/" />
-      <root url="jar://$USER_HOME$/Desktop/UCanAccess-2.0.9.4-bin/UCanAccess-2.0.9.4-bin/lib/jackcess-2.0.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/UCanAccess-2.0.9.4-bin/UCanAccess-2.0.9.4-bin/ucanaccess-2.0.9.4.jar!/" />
+      <root url="file://$PROJECT_DIR$/lib/UCanAccess-2.0.9.4-bin/UCanAccess-2.0.9.4-bin/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/UCanAccess-2.0.9.4-bin/UCanAccess-2.0.9.4-bin/lib" recursive="false" />
   </library>
 </component>
