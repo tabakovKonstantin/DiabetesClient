@@ -1,6 +1,7 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 
@@ -12,12 +13,20 @@ public class DataTablePanel  extends JPanel {
     private TableModel modelForRealData = null;
     private TableModel modelForPredictData = null;
 
+    JTable tableRealData  = null;
+    JTable tablePredictData = null;
+
     public DataTablePanel() {
 
+        test(this.modelForRealData);
+        setVisible(true);
+    }
+
+    public void test(TableModel modelForRealData) {
         Box boxForTable = Box.createHorizontalBox();
 
-        JTable tableRealData  = new JTable(modelForRealData);
-        JTable tablePredictData  = new JTable(modelForPredictData);
+        tableRealData  = new JTable(modelForRealData);
+        tablePredictData  = new JTable(modelForPredictData);
 
         JPanel panelForTableRealData = new JPanel();
         JPanel panelForTablePredictData = new JPanel();
@@ -48,11 +57,14 @@ public class DataTablePanel  extends JPanel {
 
         add(boxForTable);
 
-        setVisible(true);
     }
 
     public void setModelForRealData(TableModel modelForRealData) {
+
+        System.out.print("\n meny vizvaly \n");
         this.modelForRealData = modelForRealData;
+        tableRealData.setModel(modelForRealData);
+        tableRealData.repaint();
 
     }
 

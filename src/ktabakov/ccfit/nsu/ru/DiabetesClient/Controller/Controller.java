@@ -36,7 +36,7 @@ public class Controller {
                 bgLevels.add(new BGLevel(resultSet.getString(numColumnTime), resultSet.getInt(numColumnBGlevel)));
             }
         } catch (SQLException e) {
-            new ErrorDialog().showErrorDialog(e.getMessage());
+            //new ErrorDialog().showErrorDialog(e.getMessage());
             e.printStackTrace();
         }
 

@@ -28,7 +28,7 @@ public class Model {
 
     private Connection connectDataBase(File pathToFile) throws SQLException {
         Connection connection = DriverManager.getConnection(urlDB.concat(pathToFile.toString()), loginDB, passwordDB);
-        System.out.print("pyt' k file urlDB.concat(pathToFile.toString())");
+        System.out.print("pyt' k file" + urlDB.concat(pathToFile.getPath().toString()));
         return connection;
     }
 
