@@ -45,9 +45,7 @@ public class Model {
         return numColumnBGlevel;
     }
 
-
-    /*метод принимает */
-    public JSONObject createJSONdata(DataToJSON dataToJSON) {
+    public JSONObject createJSONdata(DataToJSON dataToJSON) throws SQLException {
 
         return dataToJSON.createJSON();
     }

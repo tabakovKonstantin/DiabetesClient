@@ -21,6 +21,7 @@ public class Controller {
 
     private Model model = null;
     private ResultSet resultSetRealData = null;
+    ArrayList<BGLevel> bgLevels = null;
 
     private String urlServer = "http://localhost:3000/test";
 
@@ -32,7 +33,7 @@ public class Controller {
 
     public TableModel getTableModelForRealData(File pathToFile) {
 
-        ArrayList<BGLevel> bgLevels = new ArrayList<BGLevel>();
+        bgLevels = new ArrayList<BGLevel>();
 
         int numColumnBGlevel = model.getNumColumnBGlevel();
         int numColumnTime = model.getNumColumnTime();
@@ -50,16 +51,20 @@ public class Controller {
         return new TableModelRealData(bgLevels);
     }
 
-    public ResultSet getResultSetRealData() {
-        return resultSetRealData;
-    };
-
     public void sendJSONWithRealData() {
-        RealData realData = new RealData(resultSetRealData);
-        JSONObject jsonObjectRealData = model.createJSONdata(realData);
+        RealData realData = null;
         try {
+            realData = new RealData( model.downloadDataFromFile(new File("C:\\Users\\Константин\\Documents\\test2.mmg")), bgLevels);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            JSONObject jsonObjectRealData = model.createJSONdata(realData);
             model.sendJSONObject(jsonObjectRealData, urlServer);
         } catch (IOException e) {
+            new ErrorDialog().showErrorDialog(e.getMessage());
+            e.printStackTrace();
+        } catch (SQLException e) {
             new ErrorDialog().showErrorDialog(e.getMessage());
             e.printStackTrace();
         }
