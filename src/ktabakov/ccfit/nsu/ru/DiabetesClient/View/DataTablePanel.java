@@ -13,16 +13,16 @@ public class DataTablePanel  extends JPanel {
     private TableModel modelForRealData = null;
     private TableModel modelForPredictData = null;
 
-    JTable tableRealData  = null;
-    JTable tablePredictData = null;
+    private JTable tableRealData  = null;
+    private JTable tablePredictData = null;
 
     public DataTablePanel() {
 
-        test(this.modelForRealData);
+        test();
         setVisible(true);
     }
 
-    public void test(TableModel modelForRealData) {
+    public void test() {
         Box boxForTable = Box.createHorizontalBox();
 
         tableRealData  = new JTable(modelForRealData);
@@ -62,13 +62,10 @@ public class DataTablePanel  extends JPanel {
     public void setModelForRealData(TableModel modelForRealData) {
 
         System.out.print("\n meny vizvaly \n");
-        this.modelForRealData = modelForRealData;
         tableRealData.setModel(modelForRealData);
-        tableRealData.repaint();
-
     }
 
-    public TableModel setModelForPredictData() {
-        return modelForPredictData;
+    public void setModelForPredictData(TableModel modelForPredictData) {
+        tablePredictData.setModel(modelForPredictData);
     }
 }

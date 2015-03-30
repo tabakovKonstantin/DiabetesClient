@@ -30,7 +30,7 @@ public class Main {
 
 
         /******************************************************************/
-        Connection conn = null;
+        /*Connection conn = null;
         Statement st = null;
         try {
             conn = DriverManager.getConnection("jdbc:ucanaccess://c:/test2.mmg","" ,"gAbriEl");
@@ -64,7 +64,7 @@ public class Main {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+*/
 
 
         JSONObject obj = new JSONObject();

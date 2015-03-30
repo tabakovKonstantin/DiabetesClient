@@ -44,6 +44,18 @@ public class EvaluatePanel extends JPanel {
             }
         });
 
+        evaluateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(controller.checkDataRealDownload()) {
+                    controller.sendJSONWithRealData();
+                }
+                else {
+                    new ErrorDialog().showErrorDialog("Вы не загрузили данные");
+                }
+            }
+        });
+
         add(choseFileButton);
         add(evaluateButton);
         add(checkBox);

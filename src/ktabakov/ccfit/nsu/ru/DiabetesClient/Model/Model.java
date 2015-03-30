@@ -1,6 +1,10 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.Model;
 
+import ktabakov.ccfit.nsu.ru.DiabetesClient.Model.WorkWithJSON.DataToJSON;
+import org.json.simple.JSONObject;
+
 import java.io.File;
+import java.io.IOException;
 import java.sql.*;
 
 /**
@@ -11,12 +15,13 @@ public class Model {
     private String loginDB = "";
     private String passwordDB = "gAbriEl";
     private String urlDB = "jdbc:ucanaccess://";
-    private String SQLQuery = "Select * from tblCGMDetail WHERE BGLevel < 45";
+    private String SQLQuery = "Select * from tblCGMDetail";
     private int numColumnBGlevel = 16;
     private int numColumnTime = 1;
+    private JSONSender jsonSender = null;
 
     public Model() {
-
+        jsonSender = new JSONSender();
     }
 
     public ResultSet downloadDataFromFile(File pathToFile) throws SQLException {
@@ -39,4 +44,16 @@ public class Model {
     public int getNumColumnBGlevel() {
         return numColumnBGlevel;
     }
+
+
+    /*метод принимает */
+    public JSONObject createJSONdata(DataToJSON dataToJSON) {
+
+        return dataToJSON.createJSON();
+    }
+
+    public void sendJSONObject(JSONObject jsonObject, String urlServer) throws IOException {
+        jsonSender.send(jsonObject, urlServer);
+    }
+
 }
