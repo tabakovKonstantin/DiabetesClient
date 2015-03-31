@@ -50,8 +50,8 @@ public class Model {
         return dataToJSON.createJSON();
     }
 
-    public void sendJSONObject(JSONObject jsonObject, String urlServer) throws IOException {
-        jsonSender.send(jsonObject, urlServer);
+    public JSONObject sendJSONObject(JSONObject jsonObject, String urlServer) throws IOException {
+        return jsonSender.send(jsonObject, urlServer);
     }
 
 }

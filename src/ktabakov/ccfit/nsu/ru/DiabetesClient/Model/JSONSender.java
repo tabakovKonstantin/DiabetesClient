@@ -1,5 +1,6 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.Model;
 
+import ktabakov.ccfit.nsu.ru.DiabetesClient.Model.WorkWithJSON.StringJSONParse;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -10,6 +11,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 
@@ -18,7 +21,7 @@ import java.io.IOException;
  */
 public class JSONSender {
 
-    public String send(JSONObject jsonObject, String urlServer) throws IOException {
+    public JSONObject send(JSONObject jsonObject, String urlServer) throws IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
         HttpPost request = new HttpPost(urlServer);
@@ -27,22 +30,29 @@ public class JSONSender {
         request.addHeader("content-type", "application/json");
         request.setEntity(params);
 
-        String httpResponse = httpClient.execute(request, responseHandler);
+        JSONObject httpResponse = httpClient.execute(request, responseHandler);
 
         return httpResponse;
     }
 
 
-    ResponseHandler<String> responseHandler = new ResponseHandler<String>() { //TODO переделать на тип который вернет сервер
+    ResponseHandler<JSONObject> responseHandler = new ResponseHandler<JSONObject>() {
         @Override
-        public String handleResponse(HttpResponse httpResponse) throws ClientProtocolException, IOException {
+        public JSONObject handleResponse(HttpResponse httpResponse) throws ClientProtocolException, IOException {
             int status = httpResponse.getStatusLine().getStatusCode();
             if (status >= 200 && status < 300) {
                 HttpEntity entity = httpResponse.getEntity();
-                return entity != null ? EntityUtils.toString(entity) + status : null;
+                String stringResponse = EntityUtils.toString(entity);
+
+                try {
+                    return new StringJSONParse().parse(stringResponse);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             } else {
                 throw new ClientProtocolException("Unexpected response status: " + status);
             }
+            return null;
         }
     };
 

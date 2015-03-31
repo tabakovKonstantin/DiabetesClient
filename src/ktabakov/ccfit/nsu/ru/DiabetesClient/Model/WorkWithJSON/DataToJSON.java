@@ -8,6 +8,6 @@ import java.sql.SQLException;
  * Created by Константин on 30.03.2015.
  */
 public interface DataToJSON {
-    public JSONObject createJSON() throws SQLException;
+    public JSONObject createJSON();
 
 }

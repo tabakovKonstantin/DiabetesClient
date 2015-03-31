@@ -15,29 +15,19 @@ import java.util.ArrayList;
  */
 public class RealData implements DataToJSON {
 
-    private ResultSet resultSetRealData = null;
     ArrayList<BGLevel> bgLevels = null;
 
-    public RealData(ResultSet resultSetRealData, ArrayList<BGLevel> bgLevels) {
-        this.resultSetRealData = resultSetRealData;
+    public RealData(ArrayList<BGLevel> bgLevels) {
         this.bgLevels = bgLevels;
     }
 
     @Override
-    public JSONObject createJSON() throws SQLException {
+    public JSONObject createJSON() {
 
         JSONArray dateList = new JSONArray();
         JSONArray valueList = new JSONArray();
 
         JSONObject jsonObject = new JSONObject();
-//        resultSetRealData.beforeFirst();
-//        System.out.println("asdfgh" + resultSetRealData.isFirst());
-//
-//        while (resultSetRealData.next()){
-//            dateList.add(resultSetRealData.getInt(1));
-//            System.out.println("asdfgh" + resultSetRealData.isFirst());
-//            dateList.add(resultSetRealData.getInt(16));
-//        }
 
         for (BGLevel tmp : bgLevels) {
             dateList.add(tmp.getTimeMeasurement());
@@ -47,7 +37,7 @@ public class RealData implements DataToJSON {
         jsonObject.put("Date", dateList);
         jsonObject.put("Value", valueList);
 
-        System.out.println(jsonObject);
+        System.out.println("На сервер отправлен следующий обьект " + jsonObject);
 
         return jsonObject;
     }

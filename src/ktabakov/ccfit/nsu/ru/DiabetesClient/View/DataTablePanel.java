@@ -61,7 +61,6 @@ public class DataTablePanel  extends JPanel {
 
     public void setModelForRealData(TableModel modelForRealData) {
 
-        System.out.print("\n meny vizvaly \n");
         tableRealData.setModel(modelForRealData);
     }
 

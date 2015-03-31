@@ -53,6 +53,10 @@ public class EvaluatePanel extends JPanel {
                 else {
                     new ErrorDialog().showErrorDialog("Вы не загрузили данные");
                 }
+
+                TableModel modelForPredictData = controller.getTableModelForPredictData();
+                dataTablePanel.setModelForPredictData(modelForPredictData);
+
             }
         });
 
