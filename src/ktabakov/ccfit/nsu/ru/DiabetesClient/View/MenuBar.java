@@ -1,12 +1,25 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
+import ktabakov.ccfit.nsu.ru.DiabetesClient.Controller.Controller;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Константин on 13.03.2015.
  */
-public class MenuBar extends JMenuBar{
-    public MenuBar() {
+public class MenuBar extends JMenuBar {
+
+    private Controller controller = null;
+    private MenuBar menuBar = null;
+    private JMenuItem jMenuItemLogIn = null;
+    private JMenuItem jMenuItemLogOut = null;
+
+    public MenuBar(Controller controller) {
+
+        this.controller = controller;
+        menuBar = this;
 
         createFileMenu();
         createSettingMenu();
@@ -40,13 +53,36 @@ public class MenuBar extends JMenuBar{
 
         JMenu jMenuAuthorization = new JMenu("Авторизация");
 
-        JMenuItem jMenuItemLogIn = new JMenuItem("Вход");
-        JMenuItem jMenuItemLogOut = new JMenuItem("Выход");
+        jMenuItemLogIn = new JMenuItem("Вход");
+        jMenuItemLogOut = new JMenuItem("Выход");
         JMenuItem jMenuItemRegistration = new JMenuItem("Регистрация");
 
+        jMenuItemLogIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AuthorizationDialog authorization1Dialog = new AuthorizationDialog(controller, menuBar);
+            }
+        });
+
+        jMenuItemLogOut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LogOutDialog logOutDialog = new LogOutDialog(controller, menuBar);
+                System.out.println("меню выхода");
+
+            }
+        });
+
+        jMenuItemRegistration.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RegistrationDialog registrationDialog = new RegistrationDialog(controller, menuBar);
+            }
+        });
+
+        jMenuAuthorization.add(jMenuItemRegistration);
         jMenuAuthorization.add(jMenuItemLogIn);
         jMenuAuthorization.add(jMenuItemLogOut);
-        jMenuAuthorization.add(jMenuItemRegistration);
 
         add(jMenuAuthorization);
     }
@@ -62,5 +98,13 @@ public class MenuBar extends JMenuBar{
         jMenuAbout.add(jMenuItemAbout);
 
         add(jMenuAbout);
+    }
+
+    public JMenuItem getjMenuItemLogOut() {
+        return jMenuItemLogOut;
+    }
+
+    public JMenuItem getjMenuItemLogIn() {
+        return jMenuItemLogIn;
     }
 }

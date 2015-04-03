@@ -3,18 +3,21 @@ package ktabakov.ccfit.nsu.ru.DiabetesClient.Controller;
 import ktabakov.ccfit.nsu.ru.DiabetesClient.Model.BGLevel;
 import ktabakov.ccfit.nsu.ru.DiabetesClient.Model.Model;
 import ktabakov.ccfit.nsu.ru.DiabetesClient.Model.TableModelRealData;
+import ktabakov.ccfit.nsu.ru.DiabetesClient.Model.WorkWithJSON.LoginData;
 import ktabakov.ccfit.nsu.ru.DiabetesClient.Model.WorkWithJSON.RealData;
 import ktabakov.ccfit.nsu.ru.DiabetesClient.View.ErrorDialog;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
 import javax.swing.table.TableModel;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Arrays;
 
 /**
  * Created by Константин on 29.03.2015.
@@ -27,11 +30,18 @@ public class Controller {
 
     private JSONObject jsonObjectPredictData = null;
 
-    private String urlServer = "http://localhost:3000/test";
+    private boolean authorization = false;
+
+    private String urlServer = "http://localhost:3000/evaluate";
+    String urlLogin = "http://localhost:3000/login";
+    String urlLogout = "http://localhost:3000/logout";
+    String urlRegister = "http://localhost:3000/register";
+
 
 
     public Controller() {
         model = new Model();
+        System.out.println(System.getProperty("java.io.tmpdir"));
 
     }
 
@@ -77,12 +87,15 @@ public class Controller {
         RealData realData = new RealData(bgLevelsReal);
         try {
             JSONObject jsonObjectRealData = model.createJSONdata(realData);
-            jsonObjectPredictData = model.sendJSONObject(jsonObjectRealData, urlServer);
+            String response =  model.sendJSONObject(jsonObjectRealData, urlServer);
+            jsonObjectPredictData = model.parseJSON(response);
         } catch (IOException e) {
             new ErrorDialog().showErrorDialog(e.getMessage());
             e.printStackTrace();
         } catch (SQLException e) {
             new ErrorDialog().showErrorDialog(e.getMessage());
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 
@@ -95,5 +108,78 @@ public class Controller {
             return true;
         }
     }
+
+    private void saveAuthorizateDate(String login, char[] password) {
+
+    }
+
+    private void login(String login, char[] password) throws SQLException, IOException {
+        LoginData loginData =  new LoginData(login, password);
+        JSONObject jsonObjectLoginData = model.createJSONdata(loginData);
+        System.out.println("Сервер ответил на авторизацию " + model.sendJSONObject(jsonObjectLoginData, urlLogin ));
+
+    }
+
+    public int logout() {
+        try {
+            System.out.println("Сервер ответил на деавторизацию " + model.sendJSONObject(new JSONObject(), urlLogout ));
+            authorization = false;
+            return 0;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 1;
+        }
+    }
+
+
+    public int authorization(String login, char[] password, boolean saveAuthorizateDate) {
+        if(!authorization) {
+            try {
+                login(login, password);
+                authorization = true;
+                saveAuthorizateDate(login, password);
+                return 0;
+            } catch (SQLException e) {
+                new ErrorDialog().showErrorDialog(e.getMessage());
+                e.printStackTrace();
+                return 1;
+            } catch (IOException e) {
+                new ErrorDialog().showErrorDialog(e.getMessage());
+                e.printStackTrace();
+                return 1;
+            }
+        } else {
+            return 0;
+        }
+
+
+    }
+
+
+    public int registred(String login, char[] password, char[] retryPassword) {
+        if(!Arrays.equals(password, retryPassword)) {
+            new ErrorDialog().showErrorDialog("Пароли не совпадают");
+            return 2;
+        } else {
+            LoginData loginData =  new LoginData(login, password);
+            try {
+                JSONObject jsonObjectLoginData = model.createJSONdata(loginData);
+                System.out.println("Сервер ответил на регистрацию " + model.sendJSONObject(jsonObjectLoginData, urlRegister ));
+                authorization = true;
+                return 0;
+            } catch (SQLException e) {
+            new ErrorDialog().showErrorDialog(e.getMessage());
+            e.printStackTrace();
+            return 1;
+        } catch (IOException e) {
+            new ErrorDialog().showErrorDialog(e.getMessage());
+            e.printStackTrace();
+            return 1;
+        }
+
+        }
+
+    }
+
 
 }

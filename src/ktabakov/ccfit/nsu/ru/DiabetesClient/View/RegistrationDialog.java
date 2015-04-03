@@ -1,48 +1,145 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
+import ktabakov.ccfit.nsu.ru.DiabetesClient.Controller.Controller;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Константин on 13.03.2015.
  */
 public class RegistrationDialog extends JDialog {
 
-    private int lenLogin = 12;
-    private int lenPass = 12;
-    public RegistrationDialog() {
-        createRegistrationDialog();
+    private JButton okButton;
+    private JButton cancelButton;
+    private JLabel loginLabel;
+    private JLabel passwordLabel;
+    private JLabel retryPassworLabel;
+    private JTextField loginTextField;
+    private JPasswordField passwordField;
+    private JPasswordField retryPasswordField;
+
+    private Controller controller = null;
+    private MenuBar menuBar = null;
+
+    public RegistrationDialog(Controller controller, MenuBar menuBar) {
+
+        this.controller = controller;
+        this.menuBar = menuBar;
+
+        initComponents();
+        setActionLIstener();
+        pack();
+        setTitle("Регистрация");
+        setResizable(false);
+        setVisible(true);
+
     }
 
-    private void createRegistrationDialog() {
-        JPanel panel = new JPanel();
+    private void initComponents() {
 
-        JLabel loginLabel = new JLabel("Логин");
-        JLabel passLabel = new JLabel("Пароль");
-        JLabel confirmpassLabel = new JLabel("Введите пароль еще раз");
+            okButton = new JButton();
+            cancelButton = new JButton();
+            loginTextField = new JTextField(10);
+            passwordField = new JPasswordField();
+            retryPasswordField = new JPasswordField();
+            loginLabel = new JLabel();
+            passwordLabel = new JLabel();
+            retryPassworLabel = new JLabel();
 
-        JTextField loginField = new JTextField(lenLogin);
-        JPasswordField passwordField = new JPasswordField(lenPass);
-        JPasswordField confirmPasswordField = new JPasswordField(lenPass);
+            okButton.setText("Ok");
+            cancelButton.setText("Cancel");
 
-        JButton okButton = new JButton("Ок");
-        JButton cancelButton = new JButton("Cancel");
+            loginLabel.setHorizontalAlignment(SwingConstants.LEFT);
+            loginLabel.setText("Логин");
 
-        panel.add(loginLabel);
-        panel.add(loginField);
+            passwordLabel.setHorizontalAlignment(SwingConstants.LEFT);
+            passwordLabel.setText("Пароль");
 
-        panel.add(passLabel);
-        panel.add(passwordField);
-        panel.add(confirmpassLabel);
-        panel.add(confirmPasswordField);
+            retryPassworLabel.setText("Введите пароль еще раз");
 
-        panel.add(okButton);
-        panel.add(cancelButton);
+            GroupLayout layout = new GroupLayout(getContentPane());
+            getContentPane().setLayout(layout);
+            layout.setHorizontalGroup(
+                    layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGap(25, 25, 25)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(retryPassworLabel)
+                                                    .addComponent(loginLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(passwordLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(okButton, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, Short.MAX_VALUE)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(loginTextField)
+                                                    .addComponent(passwordField)
+                                                    .addComponent(retryPasswordField))
+                                            .addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
+                                    .addGap(39, 39, 39))
+            );
+            layout.setVerticalGroup(
+                    layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGap(24, 24, 24)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(loginLabel, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(loginTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                    .addGap(14, 14, 14)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(passwordLabel))
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(retryPasswordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                    .addGap(3, 3, 3)
+                                                    .addComponent(retryPassworLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(cancelButton)
+                                            .addComponent(okButton))
+                                    .addContainerGap(33, Short.MAX_VALUE))
+            );
 
-        add(panel);
+    }
 
-        setTitle("Регистрация");
-        setSize(200, 200);
-        setVisible(true);
+    private void setActionLIstener() {
+        JDialog dialog = this;
+        okButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String login = loginTextField.getText();
+                char[] password = passwordField.getPassword();
+                char[] retryPassword = retryPasswordField.getPassword();
+                int status = controller.registred(login, password, retryPassword);
+                switch (status){
+                    case 0:
+                        menuBar.getjMenuItemLogIn().setEnabled(false);
+                        menuBar.getjMenuItemLogOut().setEnabled(true);
+                        dialog.dispose();
+                        break;
+                    case 1:
+                        loginTextField.setText("");
+                        break;
+                    case 2:
+                        passwordField.setText("");
+                        retryPasswordField.setText("");
+                        break;
+                }
+            }
+        });
+
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose();
+            }
+        });
+
+
     }
 
 

@@ -1,7 +1,11 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.Model;
 
 import ktabakov.ccfit.nsu.ru.DiabetesClient.Model.WorkWithJSON.DataToJSON;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,9 +23,11 @@ public class Model {
     private int numColumnBGlevel = 16;
     private int numColumnTime = 1;
     private JSONSender jsonSender = null;
+    private CloseableHttpClient httpClient = null;
 
     public Model() {
-        jsonSender = new JSONSender();
+        httpClient = HttpClientBuilder.create().build();
+        jsonSender = new JSONSender(httpClient);
     }
 
     public ResultSet downloadDataFromFile(File pathToFile) throws SQLException {
@@ -50,8 +56,18 @@ public class Model {
         return dataToJSON.createJSON();
     }
 
-    public JSONObject sendJSONObject(JSONObject jsonObject, String urlServer) throws IOException {
+    public String sendJSONObject(JSONObject jsonObject, String urlServer) throws IOException {
         return jsonSender.send(jsonObject, urlServer);
     }
+
+
+        public JSONObject parseJSON(String s) throws ParseException {
+            JSONParser parser = new JSONParser();
+            Object obj = parser.parse(s);
+            return (JSONObject) obj;
+        }
+
+
+
 
 }

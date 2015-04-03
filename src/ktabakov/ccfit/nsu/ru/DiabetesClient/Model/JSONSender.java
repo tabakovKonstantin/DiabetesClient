@@ -5,6 +5,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -20,9 +21,13 @@ import java.io.IOException;
  * Created by Константин on 30.03.2015.
  */
 public class JSONSender {
+    private  CloseableHttpClient httpClient = null;
 
-    public JSONObject send(JSONObject jsonObject, String urlServer) throws IOException {
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+    public JSONSender(CloseableHttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
+
+    public String send(JSONObject jsonObject, String urlServer) throws IOException {
 
         HttpPost request = new HttpPost(urlServer);
 
@@ -30,29 +35,27 @@ public class JSONSender {
         request.addHeader("content-type", "application/json");
         request.setEntity(params);
 
-        JSONObject httpResponse = httpClient.execute(request, responseHandler);
+        String httpResponse = httpClient.execute(request, responseHandler);
 
         return httpResponse;
     }
 
 
-    ResponseHandler<JSONObject> responseHandler = new ResponseHandler<JSONObject>() {
+    ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
         @Override
-        public JSONObject handleResponse(HttpResponse httpResponse) throws ClientProtocolException, IOException {
+        public String handleResponse(HttpResponse httpResponse) throws ClientProtocolException, IOException  {
             int status = httpResponse.getStatusLine().getStatusCode();
+            HttpEntity entity = httpResponse.getEntity();
+            String stringResponse = EntityUtils.toString(entity);
             if (status >= 200 && status < 300) {
-                HttpEntity entity = httpResponse.getEntity();
-                String stringResponse = EntityUtils.toString(entity);
 
-                try {
-                    return new StringJSONParse().parse(stringResponse);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+
+
+                    System.out.println("COCDE : " + status);
+                    return stringResponse;
             } else {
-                throw new ClientProtocolException("Unexpected response status: " + status);
+                throw new ClientProtocolException("Unexpected response status: " + status + stringResponse);
             }
-            return null;
         }
     };
 

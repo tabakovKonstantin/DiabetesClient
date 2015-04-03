@@ -26,7 +26,7 @@ public class View extends JFrame {
         RegistrationDialog registrationDialog = new RegistrationDialog();*/
 
         controller = new Controller();
-        menuBar = new MenuBar();
+        menuBar = new MenuBar(controller);
         dataTablePanel = new DataTablePanel();
         evaluatePanel = new EvaluatePanel(controller, dataTablePanel);
 
