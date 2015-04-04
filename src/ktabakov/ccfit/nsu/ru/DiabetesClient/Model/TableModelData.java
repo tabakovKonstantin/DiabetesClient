@@ -13,12 +13,12 @@ import java.util.Set;
  */
 
 
-public class TableModelRealData implements TableModel {
+public class TableModelData implements TableModel {
 
     private List<BGLevel> bgLevels = null;
     private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
 
-    public TableModelRealData(List<BGLevel> bgLevels) {
+    public TableModelData(List<BGLevel> bgLevels) {
         this.bgLevels = bgLevels;
     }
 

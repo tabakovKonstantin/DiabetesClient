@@ -1,5 +1,6 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
+import ktabakov.ccfit.nsu.ru.DiabetesClient.Controller.Controller;
 import ktabakov.ccfit.nsu.ru.DiabetesClient.res.Strings;
 
 import javax.swing.*;
@@ -9,8 +10,15 @@ import javax.swing.*;
  */
 public class SettingDialog extends JDialog {
 
-    public SettingDialog() {
+    private Controller controller = null;
+
+    public SettingDialog(Controller controller) {
+
+        this.controller = controller;
+
         initComponents();
+        setActionListener();
+
         setTitle(Strings.NAME_SETTING_DIALOG);
         setSize(200, 200);
         setVisible(true);
@@ -26,6 +34,10 @@ public class SettingDialog extends JDialog {
         panel.add(cancelButton);
 
         add(panel);
+
+    }
+
+    private void setActionListener() {
 
     }
 }

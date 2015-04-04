@@ -23,7 +23,7 @@ public class DataTablePanel  extends JPanel {
         setVisible(true);
     }
 
-    public void initComponent() {
+    private void initComponent() {
         Box boxForTable = Box.createHorizontalBox();
 
         tableRealData  = new JTable(modelForRealData);

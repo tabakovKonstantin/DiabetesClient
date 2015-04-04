@@ -32,7 +32,6 @@ public class LogOutDialog extends JDialog {
 
     private void initComponents() {
 
-
         yesButton = new javax.swing.JButton();
         noButton = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();

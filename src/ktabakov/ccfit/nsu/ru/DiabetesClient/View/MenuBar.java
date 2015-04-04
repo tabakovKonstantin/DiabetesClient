@@ -12,10 +12,13 @@ import java.awt.event.ActionListener;
  */
 public class MenuBar extends JMenuBar {
 
-    private Controller controller = null;
-    private MenuBar menuBar = null;
     private JMenuItem jMenuItemLogIn = null;
     private JMenuItem jMenuItemLogOut = null;
+    private JMenuItem jMenuItemRegistration = null;
+    private JMenuItem jMenuItemSettingModel = null;
+
+    private Controller controller = null;
+    private MenuBar menuBar = null;
 
     public MenuBar(Controller controller) {
 
@@ -26,6 +29,8 @@ public class MenuBar extends JMenuBar {
         createSettingMenu();
         createAuthorizationMenu();
         createAboutMenu();
+
+        setActionLIstener();
     }
 
     private void createFileMenu() {
@@ -43,7 +48,7 @@ public class MenuBar extends JMenuBar {
 
         JMenu jMenuSetting = new JMenu(Strings.MENU_SETTING_NAME);
 
-        JMenuItem jMenuItemSettingModel = new JMenuItem(Strings.MENU_SETTING_ITEM_SETTING_NAME);
+        jMenuItemSettingModel = new JMenuItem(Strings.MENU_SETTING_ITEM_SETTING_NAME);
 
         jMenuSetting.add(jMenuItemSettingModel);
 
@@ -56,8 +61,29 @@ public class MenuBar extends JMenuBar {
 
         jMenuItemLogIn = new JMenuItem(Strings.MENU_AUTHORIZATION_ITEM_LOGIN_NAME);
         jMenuItemLogOut = new JMenuItem(Strings.MENU_AUTHORIZATION_ITEM_LOGOUT_NAME);
-        JMenuItem jMenuItemRegistration = new JMenuItem(Strings.MENU_AUTHORIZATION_ITEM_REGISTR_NAME);
+        jMenuItemRegistration = new JMenuItem(Strings.MENU_AUTHORIZATION_ITEM_REGISTR_NAME);
 
+        jMenuAuthorization.add(jMenuItemRegistration);
+        jMenuAuthorization.add(jMenuItemLogIn);
+        jMenuAuthorization.add(jMenuItemLogOut);
+
+        add(jMenuAuthorization);
+    }
+
+    private void createAboutMenu() {
+
+        JMenu jMenuAbout = new JMenu(Strings.MENU_HELP_NAME);
+
+        JMenuItem jMenuItemHelp = new JMenuItem(Strings.MENU_HELP_ITME_HELP_NAME);
+        JMenuItem jMenuItemAbout = new JMenuItem(Strings.MENU_HELP_ITEM_ABOUT_NAME);
+
+        jMenuAbout.add(jMenuItemHelp);
+        jMenuAbout.add(jMenuItemAbout);
+
+        add(jMenuAbout);
+    }
+
+    private void setActionLIstener() {
         jMenuItemLogIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -81,24 +107,12 @@ public class MenuBar extends JMenuBar {
             }
         });
 
-        jMenuAuthorization.add(jMenuItemRegistration);
-        jMenuAuthorization.add(jMenuItemLogIn);
-        jMenuAuthorization.add(jMenuItemLogOut);
-
-        add(jMenuAuthorization);
-    }
-
-    private void createAboutMenu() {
-
-        JMenu jMenuAbout = new JMenu(Strings.MENU_HELP_NAME);
-
-        JMenuItem jMenuItemHelp = new JMenuItem(Strings.MENU_HELP_ITME_HELP_NAME);
-        JMenuItem jMenuItemAbout = new JMenuItem(Strings.MENU_HELP_ITEM_ABOUT_NAME);
-
-        jMenuAbout.add(jMenuItemHelp);
-        jMenuAbout.add(jMenuItemAbout);
-
-        add(jMenuAbout);
+        jMenuItemSettingModel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SettingDialog settingDialog = new SettingDialog(controller);
+            }
+        });
     }
 
     public JMenuItem getjMenuItemLogOut() {
