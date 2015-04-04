@@ -113,6 +113,9 @@ public class AuthorizationDialog extends JDialog {
                 boolean saveAuthorizateDate = saveAuthorizateDataCheckBox.isSelected();
 
                 int status = controller.authorization(login, password, saveAuthorizateDate);
+                if(saveAuthorizateDate) {
+                    controller.insertDBAuthorizationData(login, password, saveAuthorizateDate);
+                }
 
                 if(1 == status) {
                     loginTextField.setText("");
@@ -131,6 +134,7 @@ public class AuthorizationDialog extends JDialog {
                 dialog.dispose();
             }
         });
+
     }
 
 

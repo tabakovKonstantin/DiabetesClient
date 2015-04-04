@@ -71,7 +71,7 @@ public class EvaluatePanel extends JPanel {
         choseFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                File pathToFile = fileChooser();
+                String pathToFile = fileChooser().toString();
                 System.out.print(pathToFile);
                 TableModel modelForRealData = controller.getTableModelForRealData(pathToFile);
                 dataTablePanel.setModelForRealData(modelForRealData);

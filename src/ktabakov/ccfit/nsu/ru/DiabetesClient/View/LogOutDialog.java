@@ -77,6 +77,7 @@ public class LogOutDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int status = controller.logout();
+                controller.setFlag(false);
                 if(1 == status) {
                     new ErrorDialog().showErrorDialog(Strings.ERROR_MASSAGE_LOGOUT_ERROR);
                     dialog.dispose();

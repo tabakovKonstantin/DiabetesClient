@@ -14,8 +14,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -34,14 +33,17 @@ public class Controller {
 
     public Controller() {
         model = new Model();
+        test();
+//        insertDBAuthorizationData("login", new char[]{ 'a', 'b', 'c', 'd', 'e' }, false);
     }
 
-    public TableModelData getTableModelForRealData(File pathToFile) {
+    public TableModelData getTableModelForRealData(String pathToFile) {
 
         bgLevelsReal = new ArrayList<BGLevel>();
 
         try {
-            ResultSet resultSetRealData = model.downloadDataFromFile(pathToFile);
+            Connection connection = model.connectDataBase(pathToFile, Property.LOGIN_DATA_DB, Property.PASSWORD_DATA_DB);
+            ResultSet resultSetRealData = model.sqlQuerySelect(connection, Property.SQL_QUERY);
             while (resultSetRealData.next()) {
                 bgLevelsReal.add(new BGLevel(resultSetRealData.getString(1), resultSetRealData.getInt(Property.NAME_BGLEVEL_COLUMN))); //TODO: сделать дату на проперти а не на инт
             }
@@ -158,4 +160,85 @@ public class Controller {
         }
 
     }
+
+    private String createPathToUserDB() {
+        String pathToFolderAplication = System.getenv("APPDATA").concat("/").concat(Property.APPLICATION_FOLDER_NAME);
+        String pathToFileUserDB = pathToFolderAplication.concat("/").concat(Property.NAME_USER_DB_FILE);
+        File folder = new File(pathToFolderAplication);
+        if(!folder.exists()) {
+            folder.mkdir();
+        }
+        return pathToFileUserDB;
+    }
+
+    private void test() {
+
+        String pathToFileUserDB = createPathToUserDB();
+        File file = new File(pathToFileUserDB);
+
+        if( !file.exists() ) {
+            try {
+                String query = pathToFileUserDB.concat(";newdatabaseversion=V2010");
+                Connection conn = model.connectDataBase(query, Property.LOGIN_USER_DB, Property.PASSWORD_USER_DB);
+                model.sqlQueryUpdate(conn, Property.SQL_QUERY_CREATE_USER_TABLE);
+                model.sqlQueryUpdate(conn, Property.SQL_QUERY_INSERT_USER_TABLE);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                Connection connection = model.connectDataBase(pathToFileUserDB, Property.LOGIN_USER_DB, Property.PASSWORD_USER_DB);
+                ResultSet resultSet = model.sqlQuerySelect(connection, Property.SQL_QUERY_USER_TABLE_SELECT_ALL);
+
+                String saveLogin = null;
+                String savePassword = null;
+                Boolean doLogin = null;
+
+                while (resultSet.next()) {
+                    saveLogin = resultSet.getString("login");
+                    savePassword = resultSet.getString("password");
+                    doLogin = resultSet.getBoolean("flag");
+                }
+                System.out.println("Что делать: " + doLogin + " logpass " + saveLogin + savePassword);
+                if(doLogin) {
+                    login(saveLogin, savePassword.toCharArray());
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void insertDBAuthorizationData(String login, char[] password, boolean flag) {
+        String urlDB = createPathToUserDB();
+        try {
+
+            Connection connection = model.connectDataBase(urlDB, Property.LOGIN_USER_DB, Property.PASSWORD_USER_DB);
+//            String sqlQuery = "UPDATE myUser SET login = ".concat(login).concat(", password = ").concat(new String(password)).concat(", flag = ".concat(Boolean.toString(flag)));
+            String sqlQuery = "UPDATE myUser SET login = '".concat(login).concat("', password = '").concat(new String(password)).concat("', flag = ").concat(Boolean.toString(flag));
+
+            System.out.print(sqlQuery);
+            model.sqlQueryUpdate(connection, sqlQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setFlag( boolean flag) {
+        String urlDB = createPathToUserDB();
+        try {
+
+            Connection connection = model.connectDataBase(urlDB, Property.LOGIN_USER_DB, Property.PASSWORD_USER_DB);
+            String sqlQuery = "UPDATE myUser SET  flag = ".concat(Boolean.toString(flag));
+
+            System.out.print(sqlQuery);
+            model.sqlQueryUpdate(connection, sqlQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -25,18 +25,23 @@ public class Model {
         jsonSender = new JSONSender(httpClient);
     }
 
-    private Connection connectDataBase(File pathToFile) throws SQLException {
-        String urlConnection = Property.URL_DB.concat(pathToFile.toString());
-        Connection connection = DriverManager.getConnection(urlConnection, Property.LOGIN_DB, Property.PASSWORD_DB);
-        System.out.print("pyt' k file" + Property.URL_DB.concat(pathToFile.getPath().toString()));
+    public Connection connectDataBase(String pathToFile, String login, String password) throws SQLException {
+        String urlConnection = Property.URL_DB.concat(pathToFile);
+        Connection connection = DriverManager.getConnection(urlConnection, login, password);
+        System.out.println("URL: " + urlConnection);
         return connection;
     }
 
-    public ResultSet downloadDataFromFile(File pathToFile) throws SQLException {
-        Connection connection = connectDataBase(pathToFile);
+    public ResultSet sqlQuerySelect(Connection connection, String query) throws SQLException {
+        System.out.println("ЗАпрос " + query);
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(Property.SQL_QUERY);
-        return resultSet;
+        return statement.executeQuery(query);
+    }
+
+    public boolean sqlQueryUpdate(Connection connection, String query) throws SQLException {
+        System.out.println("ЗАпрос " +query);
+        Statement statement = connection.createStatement();
+        return statement.execute(query);
     }
 
     public JSONObject createJSON(DataToJSON dataToJSON) throws SQLException {
