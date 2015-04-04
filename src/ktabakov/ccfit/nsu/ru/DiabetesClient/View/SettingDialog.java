@@ -1,5 +1,7 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
+import ktabakov.ccfit.nsu.ru.DiabetesClient.res.Strings;
+
 import javax.swing.*;
 
 /**
@@ -8,22 +10,22 @@ import javax.swing.*;
 public class SettingDialog extends JDialog {
 
     public SettingDialog() {
-        createSettingDialog();
+        initComponents();
+        setTitle(Strings.NAME_SETTING_DIALOG);
+        setSize(200, 200);
+        setVisible(true);
     }
 
-    private void createSettingDialog() {
+    private void initComponents() {
         JPanel panel = new JPanel();
 
-        JButton okButton = new JButton("Ок");
-        JButton cancelButton = new JButton("Cancel");
+        JButton okButton = new JButton(Strings.OK_BUTTON_NAME);
+        JButton cancelButton = new JButton(Strings.CANCEL_BUTTON_NAME);
 
         panel.add(okButton);
         panel.add(cancelButton);
 
         add(panel);
 
-        setTitle("Настроки модели прогнозирования");
-        setSize(200, 200);
-        setVisible(true);
     }
 }

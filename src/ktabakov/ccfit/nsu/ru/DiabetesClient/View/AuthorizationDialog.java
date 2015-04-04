@@ -1,6 +1,7 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
 import ktabakov.ccfit.nsu.ru.DiabetesClient.Controller.Controller;
+import ktabakov.ccfit.nsu.ru.DiabetesClient.res.Strings;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -28,7 +29,7 @@ public class AuthorizationDialog extends JDialog {
        initComponents();
        setActionLIstener();
        pack();
-       setTitle("Авторизация");
+       setTitle(Strings.NAME_AUTHORIZATION_DIALOG);
        setResizable(false);
        setVisible(true);
 
@@ -46,17 +47,17 @@ public class AuthorizationDialog extends JDialog {
 
 
         loginLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        loginLabel.setText("Логин");
+        loginLabel.setText(Strings.AUTHORIZATION_LOGIN_LABEL);
 
         passwordLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        passwordLabel.setText("Пароль");
+        passwordLabel.setText(Strings.AUTHORIZATION_PASSWORD_LABEL);
 
 
-        okButton.setText("Ok");
+        okButton.setText(Strings.OK_BUTTON_NAME);
 
-        saveAuthorizateDataCheckBox.setText("Запомнить пароль");
+        saveAuthorizateDataCheckBox.setText(Strings.AUTHORIZATION_SAVE_DATA_CHECKBOX);
 
-        cancelButton.setText("Cancel");
+        cancelButton.setText(Strings.CANCEL_BUTTON_NAME);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

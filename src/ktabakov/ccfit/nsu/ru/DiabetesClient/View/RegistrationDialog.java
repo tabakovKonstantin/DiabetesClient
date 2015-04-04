@@ -1,6 +1,7 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
 import ktabakov.ccfit.nsu.ru.DiabetesClient.Controller.Controller;
+import ktabakov.ccfit.nsu.ru.DiabetesClient.res.Strings;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +16,7 @@ public class RegistrationDialog extends JDialog {
     private JButton cancelButton;
     private JLabel loginLabel;
     private JLabel passwordLabel;
-    private JLabel retryPassworLabel;
+    private JLabel retryPasswordLabel;
     private JTextField loginTextField;
     private JPasswordField passwordField;
     private JPasswordField retryPasswordField;
@@ -31,7 +32,7 @@ public class RegistrationDialog extends JDialog {
         initComponents();
         setActionLIstener();
         pack();
-        setTitle("Регистрация");
+        setTitle(Strings.NAME_REGISTRATION_DIALOG);
         setResizable(false);
         setVisible(true);
 
@@ -46,18 +47,18 @@ public class RegistrationDialog extends JDialog {
             retryPasswordField = new JPasswordField();
             loginLabel = new JLabel();
             passwordLabel = new JLabel();
-            retryPassworLabel = new JLabel();
+            retryPasswordLabel = new JLabel();
 
-            okButton.setText("Ok");
-            cancelButton.setText("Cancel");
+            okButton.setText(Strings.OK_BUTTON_NAME);
+            cancelButton.setText(Strings.CANCEL_BUTTON_NAME);
 
             loginLabel.setHorizontalAlignment(SwingConstants.LEFT);
-            loginLabel.setText("Логин");
+            loginLabel.setText(Strings.AUTHORIZATION_LOGIN_LABEL);
 
             passwordLabel.setHorizontalAlignment(SwingConstants.LEFT);
-            passwordLabel.setText("Пароль");
+            passwordLabel.setText(Strings.AUTHORIZATION_PASSWORD_LABEL);
 
-            retryPassworLabel.setText("Введите пароль еще раз");
+            retryPasswordLabel.setText(Strings.AUTHORIZATION_RETRYPASSWORD_LABEL);
 
             GroupLayout layout = new GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
@@ -67,7 +68,7 @@ public class RegistrationDialog extends JDialog {
                                     .addGap(25, 25, 25)
                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(retryPassworLabel)
+                                                    .addComponent(retryPasswordLabel)
                                                     .addComponent(loginLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                     .addComponent(passwordLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                             .addComponent(okButton, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
@@ -96,7 +97,7 @@ public class RegistrationDialog extends JDialog {
                                             .addComponent(retryPasswordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                             .addGroup(layout.createSequentialGroup()
                                                     .addGap(3, 3, 3)
-                                                    .addComponent(retryPassworLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                    .addComponent(retryPasswordLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addGap(18, 18, 18)
                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(cancelButton)

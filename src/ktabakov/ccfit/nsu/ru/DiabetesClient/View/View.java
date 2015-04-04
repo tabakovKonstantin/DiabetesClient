@@ -2,6 +2,7 @@ package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
 
 import ktabakov.ccfit.nsu.ru.DiabetesClient.Controller.Controller;
+import ktabakov.ccfit.nsu.ru.DiabetesClient.res.Strings;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +39,7 @@ public class View extends JFrame {
 
         setLocation(100, 100);
         setSize(500, 500);
-        setTitle("DiabetesClient");
+        setTitle(Strings.NAME_APPLIVATION);
         setJMenuBar(menuBar);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

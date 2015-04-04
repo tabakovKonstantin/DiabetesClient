@@ -6,6 +6,7 @@ import ktabakov.ccfit.nsu.ru.DiabetesClient.Model.TableModelRealData;
 import ktabakov.ccfit.nsu.ru.DiabetesClient.Model.WorkWithJSON.LoginData;
 import ktabakov.ccfit.nsu.ru.DiabetesClient.Model.WorkWithJSON.RealData;
 import ktabakov.ccfit.nsu.ru.DiabetesClient.View.ErrorDialog;
+import ktabakov.ccfit.nsu.ru.DiabetesClient.res.Strings;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -158,7 +159,7 @@ public class Controller {
 
     public int registred(String login, char[] password, char[] retryPassword) {
         if(!Arrays.equals(password, retryPassword)) {
-            new ErrorDialog().showErrorDialog("Пароли не совпадают");
+            new ErrorDialog().showErrorDialog(Strings.ERROR_MASSAGE_PASSWORD_EQVALS);
             return 2;
         } else {
             LoginData loginData =  new LoginData(login, password);

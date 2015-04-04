@@ -1,6 +1,7 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
 import ktabakov.ccfit.nsu.ru.DiabetesClient.Controller.Controller;
+import ktabakov.ccfit.nsu.ru.DiabetesClient.res.Strings;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -29,9 +30,9 @@ public class MenuBar extends JMenuBar {
 
     private void createFileMenu() {
 
-        JMenu jMenuFile = new JMenu("Файл");
+        JMenu jMenuFile = new JMenu(Strings.MENU_FILE_NAME);
 
-        JMenuItem jMenuItemExit = new JMenuItem("Выход");
+        JMenuItem jMenuItemExit = new JMenuItem(Strings.MENU_FILE_EXIT_ITEM_NAME);
 
         jMenuFile.add(jMenuItemExit);
 
@@ -40,9 +41,9 @@ public class MenuBar extends JMenuBar {
 
     private void createSettingMenu() {
 
-        JMenu jMenuSetting = new JMenu("Настройки");
+        JMenu jMenuSetting = new JMenu(Strings.MENU_SETTING_NAME);
 
-        JMenuItem jMenuItemSettingModel = new JMenuItem("Настройки модели");
+        JMenuItem jMenuItemSettingModel = new JMenuItem(Strings.MENU_SETTING_ITEM_SETTING_NAME);
 
         jMenuSetting.add(jMenuItemSettingModel);
 
@@ -51,11 +52,11 @@ public class MenuBar extends JMenuBar {
 
     private void createAuthorizationMenu() {
 
-        JMenu jMenuAuthorization = new JMenu("Авторизация");
+        JMenu jMenuAuthorization = new JMenu(Strings.MENU_AUTHORIZATION_NAME);
 
-        jMenuItemLogIn = new JMenuItem("Вход");
-        jMenuItemLogOut = new JMenuItem("Выход");
-        JMenuItem jMenuItemRegistration = new JMenuItem("Регистрация");
+        jMenuItemLogIn = new JMenuItem(Strings.MENU_AUTHORIZATION_ITEM_LOGIN_NAME);
+        jMenuItemLogOut = new JMenuItem(Strings.MENU_AUTHORIZATION_ITEM_LOGOUT_NAME);
+        JMenuItem jMenuItemRegistration = new JMenuItem(Strings.MENU_AUTHORIZATION_ITEM_REGISTR_NAME);
 
         jMenuItemLogIn.addActionListener(new ActionListener() {
             @Override
@@ -89,10 +90,10 @@ public class MenuBar extends JMenuBar {
 
     private void createAboutMenu() {
 
-        JMenu jMenuAbout = new JMenu("Справка");
+        JMenu jMenuAbout = new JMenu(Strings.MENU_HELP_NAME);
 
-        JMenuItem jMenuItemHelp = new JMenuItem("Справка");
-        JMenuItem jMenuItemAbout = new JMenuItem("О программе");
+        JMenuItem jMenuItemHelp = new JMenuItem(Strings.MENU_HELP_ITME_HELP_NAME);
+        JMenuItem jMenuItemAbout = new JMenuItem(Strings.MENU_HELP_ITEM_ABOUT_NAME);
 
         jMenuAbout.add(jMenuItemHelp);
         jMenuAbout.add(jMenuItemAbout);

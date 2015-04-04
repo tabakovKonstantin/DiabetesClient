@@ -1,6 +1,7 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
 import ktabakov.ccfit.nsu.ru.DiabetesClient.Controller.Controller;
+import ktabakov.ccfit.nsu.ru.DiabetesClient.res.Strings;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -14,6 +15,9 @@ import java.io.File;
  */
 public class EvaluatePanel extends JPanel {
 
+    JButton choseFileButton = null;
+    JButton evaluateButton = null;
+
     private Controller controller = null;
     private DataTablePanel dataTablePanel = null;
 
@@ -22,43 +26,18 @@ public class EvaluatePanel extends JPanel {
         this.controller = controller;
         this.dataTablePanel = dataTablePanel;
 
-        createEvaluatePanel();
+        initComponents();
+        setActionListener();
+
     }
 
-    private void createEvaluatePanel() {
+    private void initComponents() {
 
-        JButton choseFileButton = new JButton("Загрузить");
-        JButton evaluateButton = new JButton("Расчитать");
+        choseFileButton = new JButton(Strings.DOWNLOAD_BUTTON_NAME);
+        evaluateButton = new JButton(Strings.EVALUATE_BUTTON_NAME);
+        evaluateButton.setEnabled(false);
 
         JCheckBox checkBox = new JCheckBox("Учитывать этот файл при расчете модели");
-
-        choseFileButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                File pathToFile = fileChooser();
-                System.out.print(pathToFile);
-                TableModel modelForRealData = controller.getTableModelForRealData(pathToFile);
-                dataTablePanel.setModelForRealData(modelForRealData);
-
-
-            }
-        });
-
-        evaluateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(controller.checkDataRealDownload()) {
-                    controller.sendJSONWithRealData();
-                }
-                else {
-                    new ErrorDialog().showErrorDialog("Вы не загрузили данные");
-                }
-
-                TableModel modelForPredictData = controller.getTableModelForPredictData();
-                dataTablePanel.setModelForPredictData(modelForPredictData);
-
-            }
-        });
 
         add(choseFileButton);
         add(evaluateButton);
@@ -74,13 +53,48 @@ public class EvaluatePanel extends JPanel {
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(null);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
-           return chooser.getSelectedFile();
+            if(!chooser.getSelectedFile().equals("")) {
+                evaluateButton.setEnabled(true);
+                return chooser.getSelectedFile();
+            }
+            return null;
+
         }
         else {
-            new ErrorDialog().showErrorDialog("net takogo fiyla");
+            new ErrorDialog().showErrorDialog(Strings.ERROR_MASSAGE_DONT_SELECT_FILE);
             return null;
         }
 
+    }
+
+    private void setActionListener() {
+        choseFileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                File pathToFile = fileChooser();
+                System.out.print(pathToFile);
+                TableModel modelForRealData = controller.getTableModelForRealData(pathToFile);
+                dataTablePanel.setModelForRealData(modelForRealData);
+
+
+            }
+        });
+
+        evaluateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                if(controller.checkDataRealDownload()) {
+                    controller.sendJSONWithRealData();
+//                }
+//                else {
+//                    new ErrorDialog().showErrorDialog("Вы не загрузили данные");
+//                }
+
+                TableModel modelForPredictData = controller.getTableModelForPredictData();
+                dataTablePanel.setModelForPredictData(modelForPredictData);
+
+            }
+        });
     }
 
 }

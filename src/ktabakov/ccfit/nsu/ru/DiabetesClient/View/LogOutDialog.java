@@ -1,6 +1,7 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
 import ktabakov.ccfit.nsu.ru.DiabetesClient.Controller.Controller;
+import ktabakov.ccfit.nsu.ru.DiabetesClient.res.Strings;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -24,7 +25,7 @@ public class LogOutDialog extends JDialog {
         initComponents();
         setActionLIstener();
         pack();
-        setTitle("Выход");
+        setTitle(Strings.NAME_LOGOUT_DIALOG);
         setResizable(false);
         setVisible(true);
     }
@@ -36,13 +37,13 @@ public class LogOutDialog extends JDialog {
         noButton = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
 
-        yesButton.setText("Yes");
+        yesButton.setText(Strings.YES_BUTTON_NAME);
 
-        noButton.setText("No");
+        noButton.setText(Strings.NO_BUTTON_NAME);
 
         jTextField1.setEditable(false);
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("Вы уверены что хотите выйти");
+        jTextField1.setText(Strings.TEXT_LOGOUT_DIALOG);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,7 +79,7 @@ public class LogOutDialog extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 int status = controller.logout();
                 if(1 == status) {
-                    new ErrorDialog().showErrorDialog("НЕ смог разлогиниться");
+                    new ErrorDialog().showErrorDialog(Strings.ERROR_MASSAGE_LOGOUT_ERROR);
                     dialog.dispose();
 
                 } else {

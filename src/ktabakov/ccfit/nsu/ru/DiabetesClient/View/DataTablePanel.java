@@ -1,7 +1,8 @@
 package ktabakov.ccfit.nsu.ru.DiabetesClient.View;
 
+import ktabakov.ccfit.nsu.ru.DiabetesClient.res.Strings;
+
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 
@@ -18,11 +19,11 @@ public class DataTablePanel  extends JPanel {
 
     public DataTablePanel() {
 
-        test();
+        initComponent();
         setVisible(true);
     }
 
-    public void test() {
+    public void initComponent() {
         Box boxForTable = Box.createHorizontalBox();
 
         tableRealData  = new JTable(modelForRealData);
@@ -31,8 +32,8 @@ public class DataTablePanel  extends JPanel {
         JPanel panelForTableRealData = new JPanel();
         JPanel panelForTablePredictData = new JPanel();
 
-        JLabel labelRealData = new JLabel("Real");
-        JLabel labelPredictData = new JLabel("Predict");
+        JLabel labelRealData = new JLabel(Strings.REAL_DATA_TABLE_LABEL);
+        JLabel labelPredictData = new JLabel(Strings.PPEDICT_DATA_TABLE_LABEL);
 
         panelForTableRealData.setLayout(new BorderLayout());
         panelForTablePredictData.setLayout(new BorderLayout());
