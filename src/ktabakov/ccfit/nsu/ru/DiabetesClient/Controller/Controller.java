@@ -65,8 +65,10 @@ public class Controller {
         for (int i = 0; i < arrayValue.size(); i++) {
 
             String date = (String) arrayDate.get(i);
-            Long valueLong  = new Long((Long)arrayValue.get(i));
-            int value = valueLong.intValue();
+//            Long valueLong  = new Long((Long)arrayValue.get(i));
+//            int value = valueLong.intValue();
+            Double valueLong  = new Double((Double)arrayValue.get(i));
+            int value = (int)valueLong.doubleValue(); //TODO: переделать на дабл
             bgLevelsPredict.add(new BGLevel(date, value));
         }
 
